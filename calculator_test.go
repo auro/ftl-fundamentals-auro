@@ -14,11 +14,31 @@ func TestAdd(t *testing.T) {
 	}
 }
 
-// func TestSubtract(t *testing.T) {
-// 	t.Parallel()
-// 	var want float64 = 2
-// 	got := calculator.Subtract(4, 2)
-// 	if want != got {
-// 		t.Errorf("want %f, got %f", want, got)
-// 	}
-// }
+func TestSubtract(t *testing.T) {
+	t.Parallel()
+	var want float64 = 4
+	got := calculator.Subtract(2, 4)
+	if want != got {
+		//t.Errorf("want %f, got %f", want, got)
+		t.Fatalf("want %f, got %f", want, got)
+	}
+	t.Log("Tests passed")
+}
+
+func TestDivide(t *testing.T) {
+	t.Parallel()
+	var want float64 = 2
+	got := calculator.Divide(4, 2)
+	if want != got {
+		t.Errorf("want %f, got %f", want, got)
+	}
+}
+
+func TestMultiply(t *testing.T) {
+	t.Parallel()
+	var want float64 = 4
+	got := calculator.Multiply(2, 2)
+	if want != got {
+		t.Errorf("want %f, got %f", want, got)
+	}
+}
