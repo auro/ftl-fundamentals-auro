@@ -8,15 +8,23 @@ func Add(a, b float64) float64 {
 
 // Subtract takes two numbers and returns the result of subtracting the second from the first.
 func Subtract(a, b float64) float64 {
-	return b - a
-}
-
-// Divide returns division result from a to b
-func Divide(a, b float64) float64 {
-	return a / b
+	return a - b
 }
 
 // Multiply returns first times second
 func Multiply(a, b float64) float64 {
 	return a * b
+}
+
+// Divide returns division result from a to b
+func Divide(a, b float64) (float64, error) {
+	if b == 0 {
+		return 0, nil
+	}
+	return a / b, nil
+}
+
+// Remainder returns the remainder of division result from a to b
+func Remainder(a, b int) int {
+	return a % b
 }
