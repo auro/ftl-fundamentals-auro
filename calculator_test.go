@@ -2,6 +2,7 @@ package calculator_test
 
 import (
 	"calculator"
+	"math/rand"
 	"testing"
 )
 
@@ -121,51 +122,70 @@ func TestMultiply(t *testing.T) {
 	}
 }
 
-func TestDivide2(t *testing.T) {
+func TestDivide(t *testing.T) {
 	testCases := []struct {
 		desc        string
 		a, b, want  float64
 		errExpected bool
 	}{
 		{
-			desc: "Divide Test 1",
+			desc: "Divisão simples",
 			a:    2,
 			b:    2,
 			want: 1,
 		},
 		{
-			desc: "Divide Test 2",
+			desc: "Divisão por 1",
 			a:    2,
 			b:    1,
 			want: 2,
 		},
 		{
-			desc:        "Divide Test 3",
+			desc:        "Divisão por zero",
 			a:           2,
 			b:           0,
-			want:        1,
+			want:        0,
 			errExpected: true,
 		},
+		{
+			desc:        "Divisão negativa",
+			a:           1,
+			b:           -1,
+			want:        -1,
+			errExpected: false,
+		},
 	}
+
 	for _, tC := range testCases {
 		t.Run(tC.desc, func(t *testing.T) {
 			got, err := calculator.Divide(tC.a, tC.b)
 
-			if err != nil {
-				if !tC.errExpected {
-					t.Fatalf("Error: %s", err)
-				}
+			receivedErr := err != nil
+
+			if receivedErr != tC.errExpected {
+				t.Fatalf("Unexpected error: %s", err)
 			}
 
-			if (tC.want != got) && (!tC.errExpected) {
+			if tC.want != got {
 				t.Errorf("want %f, got %f", tC.want, got)
 			}
-			// (tentar fazer no menor numero de linhas possivel - 8)
-			// espera erro e recebe o erro
-			// espera erro e nao recebe o erro
-			// nao espera erro e recebe erro
-			// nao espera erro e nao recebe erro
+
 		})
+	}
+}
+
+func TestAddRandom(t *testing.T) {
+	t.Parallel()
+	var randomTests int = 100
+	for testLoop := 0; testLoop < randomTests; testLoop++ {
+		var a float64 = rand.Float64()
+		var b float64 = rand.Float64()
+		want := a + b
+		got := calculator.Add(a, b)
+		if want != got {
+			t.Errorf("want %f, got %f", want, got)
+		}
+
 	}
 }
 
