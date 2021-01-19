@@ -29,7 +29,7 @@ func Divide(a, b float64) (float64, error) {
 	return a / b, nil
 }
 
-// IsPrimo return boolean for prime numbers
+// IsPrimo return boolean result for prime numbers
 func IsPrimo(number int) (bool, error) {
 	var isprime bool = true
 	for numLoop := 2; numLoop < number; numLoop++ {
@@ -47,6 +47,15 @@ func IsPrimo(number int) (bool, error) {
 }
 
 // Remainder returns the remainder of division result from a to b
-func Remainder(a, b int) int {
+func Remainder(a, b int64) int64 {
 	return a % b
+}
+
+//Sqrt returns square root of number
+func Sqrt(number float64) (float64, error) {
+	got := math.Sqrt(float64(number))
+	if math.IsNaN(got) {
+		return 0, errors.New("Invalid operation")
+	}
+	return got, nil
 }
