@@ -2,6 +2,7 @@ package calculator_test
 
 import (
 	"calculator"
+	"fmt"
 	"math/rand"
 	"testing"
 )
@@ -176,6 +177,7 @@ func TestDivide(t *testing.T) {
 
 func TestAddRandom(t *testing.T) {
 	t.Parallel()
+
 	var randomTests int = 100
 	for testLoop := 0; testLoop < randomTests; testLoop++ {
 		var a float64 = rand.Float64()
@@ -187,6 +189,91 @@ func TestAddRandom(t *testing.T) {
 		}
 
 	}
+
+}
+
+func TestIsPrimo(t *testing.T) {
+	t.Parallel()
+
+	testCases := []struct {
+		desc              string
+		number            int
+		want, errExpected bool
+	}{
+		{
+			desc:   "2 Primo",
+			number: 2,
+			want:   true,
+		},
+		{
+			desc:   "3 Primo",
+			number: 3,
+			want:   true,
+		},
+		{
+			desc:   "4 Nao Primo",
+			number: 4,
+			want:   false,
+		},
+		{
+			desc:   "5 Primo",
+			number: 5,
+			want:   true,
+		},
+		{
+			desc:   "6 Nao Primo",
+			number: 6,
+			want:   false,
+		},
+		{
+			desc:   "7 Primo",
+			number: 7,
+			want:   true,
+		},
+
+		{
+			desc:   "8 Nao Primo",
+			number: 8,
+			want:   false,
+		},
+
+		{
+			desc:   "9 Nao Primo",
+			number: 9,
+			want:   false,
+		},
+
+		{
+			desc:   "10 Nao Primo",
+			number: 10,
+			want:   false,
+		},
+
+		{
+			desc:   "11 Primo",
+			number: 11,
+			want:   true,
+		},
+	}
+
+	var m = make(map[int]float64)
+
+	for _, tC := range testCases {
+		t.Run(tC.desc, func(t *testing.T) {
+			got, err := calculator.IsPrimo(int(tC.number))
+			receivedErr := err != nil
+			if receivedErr != tC.errExpected {
+				t.Fatalf("Unexpected error: %s", err)
+			}
+			if tC.want != got {
+				t.Errorf("Wrong answer returned about prime number")
+			}
+
+		})
+	}
+
+	fmt.Println("map:", m)
+
 }
 
 func TestRemainder(t *testing.T) {
