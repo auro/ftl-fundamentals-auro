@@ -6,6 +6,23 @@ import (
 	"testing"
 )
 
+func TestAdd2(t *testing.T) {
+	testCases := []struct {
+		desc string
+		num  float64
+	}{
+		{
+			desc: "Test Case Varying Function",
+			num:  4,
+		},
+	}
+	for _, tC := range testCases {
+		t.Run(tC.desc, func(t *testing.T) {
+
+		})
+	}
+}
+
 func TestAdd(t *testing.T) {
 
 	testCases := []struct {
@@ -37,7 +54,7 @@ func TestAdd(t *testing.T) {
 		t.Run(tC.desc, func(t *testing.T) {
 			got := calculator.Add(tC.a, tC.b)
 			if tC.want != got {
-				t.Errorf("want %f, got %f", tC.want, got)
+				t.Errorf("Error on %s: want %f, got %f", tC.desc, tC.want, got)
 			}
 		})
 	}
