@@ -417,3 +417,78 @@ func TestSqrt(t *testing.T) {
 		})
 	}
 }
+
+func TestCalculate(t *testing.T) {
+	testCases := []struct {
+		desc, str   string
+		want        float64
+		errExpected bool
+	}{
+		{
+			desc: "Soma",
+			str:  "1+1",
+			want: 2,
+		},
+		{
+			desc: "Subtração",
+			str:  "100-50",
+			want: 50,
+		},
+		{
+			desc: "Divisão",
+			str:  "10/5",
+			want: 2,
+		},
+		{
+			desc: "Multiplicação",
+			str:  "10*1",
+			want: 10,
+		},
+		{
+			desc: "Exemplo 1",
+			str:  "2*2",
+			want: 4,
+		},
+		{
+			desc: "Exemplo 2",
+			str:  "1 + 1.5",
+			want: 2.5,
+		},
+		{
+			desc: "Exemplo 3",
+			str:  "18     /     6",
+			want: 3,
+		},
+		{
+			desc: "Exemplo 4",
+			str:  "100-0.1",
+			want: 99.9,
+		},
+		{
+			desc:        "Forçando a barra #1",
+			str:         "Atirei o Pau no Gato...",
+			want:        0,
+			errExpected: true,
+		},
+		{
+			desc:        "Forçando a barra #2",
+			str:         "10826 + 2345 - 37",
+			want:        0,
+			errExpected: true,
+		},
+	}
+
+	for _, tC := range testCases {
+		t.Run(tC.desc, func(t *testing.T) {
+			got, err := calculator.Calculate(tC.str)
+			receivedErr := err != nil
+			if receivedErr != tC.errExpected {
+				t.Fatalf("Error received from operation: %s", err)
+			}
+			if tC.want != got {
+				t.Errorf("Unexpected error in %s: want %f got %f", tC.desc, tC.want, got)
+			}
+
+		})
+	}
+}

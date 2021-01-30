@@ -4,6 +4,8 @@ package calculator
 import (
 	"errors"
 	"math"
+	"strconv"
+	"strings"
 )
 
 // Add takes two numbers and returns the result of adding them together.
@@ -43,6 +45,50 @@ func Divide(a, b float64, c ...float64) (float64, error) {
 		total /= num
 	}
 	return total, nil
+}
+
+// Calculate takes a string, which must parse into a float, then an operator then another float, and makes the apropriated arithmetic functionß
+func Calculate(str string) (float64, error) {
+	i := strings.Index(str, "+")
+	if i > 0 {
+		firstFloat, err := strconv.ParseFloat(strings.TrimSpace(str[:i]), 64)
+		secondFloat, err := strconv.ParseFloat(strings.TrimSpace(str[i+1:]), 64)
+		if err != nil {
+			return 0, err
+		}
+		return Add(firstFloat, secondFloat), nil
+	}
+
+	i = strings.Index(str, "-")
+	if i > 0 {
+		firstFloat, err := strconv.ParseFloat(strings.TrimSpace(str[:i]), 64)
+		secondFloat, err := strconv.ParseFloat(strings.TrimSpace(str[i+1:]), 64)
+		if err != nil {
+			return 0, err
+		}
+		return Subtract(firstFloat, secondFloat), nil
+	}
+
+	i = strings.Index(str, "*")
+	if i > 0 {
+		firstFloat, err := strconv.ParseFloat(strings.TrimSpace(str[:i]), 64)
+		secondFloat, err := strconv.ParseFloat(strings.TrimSpace(str[i+1:]), 64)
+		if err != nil {
+			return 0, err
+		}
+		return Multiply(firstFloat, secondFloat), nil
+	}
+
+	i = strings.Index(str, "/")
+	if i > 0 {
+		firstFloat, err := strconv.ParseFloat(strings.TrimSpace(str[:i]), 64)
+		secondFloat, err := strconv.ParseFloat(strings.TrimSpace(str[i+1:]), 64)
+		if err != nil {
+			return 0, err
+		}
+		return Divide(firstFloat, secondFloat)
+	}
+	return 0, errors.New("Invalid operation")
 }
 
 // IsPrimo return boolean result for prime numbers
