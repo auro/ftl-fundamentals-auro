@@ -6,29 +6,12 @@ import (
 	"testing"
 )
 
-func TestAdd2(t *testing.T) {
-	testCases := []struct {
-		desc string
-		num  float64
-	}{
-		{
-			desc: "Test Case Varying Function",
-			num:  4,
-		},
-	}
-	for _, tC := range testCases {
-		t.Run(tC.desc, func(t *testing.T) {
-
-		})
-	}
-}
-
 func TestAdd(t *testing.T) {
-
+	t.Parallel()
 	testCases := []struct {
-		desc string
-		a, b float64
-		want float64
+		desc       string
+		a, b, want float64
+		c          []float64
 	}{
 		{
 			desc: "2+2=4",
@@ -48,24 +31,30 @@ func TestAdd(t *testing.T) {
 			b:    -1,
 			want: 122,
 		},
+		{
+			desc: "1+2+3=6",
+			a:    1,
+			b:    2,
+			c:    []float64{2},
+			want: 122,
+		},
 	}
-
 	for _, tC := range testCases {
 		t.Run(tC.desc, func(t *testing.T) {
-			got := calculator.Add(tC.a, tC.b)
+			got := calculator.Add(tC.a, tC.b, tC.c...)
 			if tC.want != got {
 				t.Errorf("Error on %s: want %f, got %f", tC.desc, tC.want, got)
 			}
 		})
 	}
-
 }
 
 func TestSubstract(t *testing.T) {
+	t.Parallel()
 	testCases := []struct {
-		desc string
-		a, b float64
-		want float64
+		desc       string
+		a, b, want float64
+		c          []float64
 	}{
 		{
 			desc: "Primeiro Test Substract",
@@ -87,10 +76,25 @@ func TestSubstract(t *testing.T) {
 			b:    5,
 			want: -10,
 		},
+
+		{
+			desc: "Quad Test Substract",
+			a:    -5,
+			b:    5,
+			c:    []float64{2},
+			want: -8,
+		},
+		{
+			desc: "Test Substract V",
+			a:    -5,
+			b:    5,
+			c:    []float64{2, 1},
+			want: -7,
+		},
 	}
 	for _, tC := range testCases {
 		t.Run(tC.desc, func(t *testing.T) {
-			got := calculator.Subtract(tC.a, tC.b)
+			got := calculator.Subtract(tC.a, tC.b, tC.c...)
 			if tC.want != got {
 				t.Errorf("want %f, got %f", tC.want, got)
 			}
@@ -99,9 +103,11 @@ func TestSubstract(t *testing.T) {
 }
 
 func TestMultiply(t *testing.T) {
+	t.Parallel()
 	testCases := []struct {
 		desc       string
 		a, b, want float64
+		c          []float64
 	}{
 		{
 			desc: "Test Multiply 1",
@@ -127,22 +133,51 @@ func TestMultiply(t *testing.T) {
 			b:    -4,
 			want: 8,
 		},
+		{
+			desc: "Test Multiply 4",
+			a:    1,
+			b:    1,
+			c:    []float64{1},
+			want: 1,
+		},
+		{
+			desc: "Test Multiply 5",
+			a:    -2,
+			b:    -4,
+			c:    []float64{-1},
+			want: -8,
+		},
+		{
+			desc: "Test Multiply 6",
+			a:    2,
+			b:    4,
+			c:    []float64{6, 8},
+			want: 384,
+		},
+		{
+			desc: "Test Multiply 10",
+			a:    2,
+			b:    4,
+			c:    []float64{6, 8, 27, 1, 12, 9, 1, 0.5},
+			want: 559872,
+		},
 	}
 	for _, tC := range testCases {
 		t.Run(tC.desc, func(t *testing.T) {
-			got := calculator.Multiply(tC.a, tC.b)
+			got := calculator.Multiply(tC.a, tC.b, tC.c...)
 			if tC.want != got {
 				t.Errorf("want %f, got %f", tC.want, got)
 			}
-
 		})
 	}
 }
 
 func TestDivide(t *testing.T) {
+	t.Parallel()
 	testCases := []struct {
 		desc        string
 		a, b, want  float64
+		c           []float64
 		errExpected bool
 	}{
 		{
@@ -165,36 +200,46 @@ func TestDivide(t *testing.T) {
 			errExpected: true,
 		},
 		{
-			desc:        "Divisão negativa",
+			desc:        "Divisão negativa 1",
 			a:           1,
 			b:           -1,
 			want:        -1,
 			errExpected: false,
 		},
+		{
+			desc:        "Divisão negativa 2",
+			a:           1,
+			b:           -1,
+			c:           []float64{10},
+			want:        -0.1,
+			errExpected: false,
+		},
+		{
+			desc:        "Divisão 10/2/5",
+			a:           10,
+			b:           2,
+			c:           []float64{5},
+			want:        1,
+			errExpected: false,
+		},
 	}
-
 	for _, tC := range testCases {
 		t.Run(tC.desc, func(t *testing.T) {
-			got, err := calculator.Divide(tC.a, tC.b)
-
+			got, err := calculator.Divide(tC.a, tC.b, tC.c...)
 			receivedErr := err != nil
-
 			if receivedErr != tC.errExpected {
-				t.Fatalf("Unexpected error: %s", err)
+				t.Fatalf("unexpected error received from calculator: %s", err)
 			}
-
 			if tC.want != got {
 				t.Errorf("want %f, got %f", tC.want, got)
 			}
-
 		})
 	}
 }
 
 func TestAddRandom(t *testing.T) {
 	t.Parallel()
-
-	var randomTests int = 100
+	randomTests := 100
 	for testLoop := 0; testLoop < randomTests; testLoop++ {
 		var a float64 = rand.Float64()
 		var b float64 = rand.Float64()
@@ -203,14 +248,11 @@ func TestAddRandom(t *testing.T) {
 		if want != got {
 			t.Errorf("want %f, got %f", want, got)
 		}
-
 	}
-
 }
 
 func TestIsPrimo(t *testing.T) {
 	t.Parallel()
-
 	testCases := []struct {
 		desc              string
 		number            int
@@ -246,32 +288,27 @@ func TestIsPrimo(t *testing.T) {
 			number: 7,
 			want:   true,
 		},
-
 		{
 			desc:   "8 Nao Primo",
 			number: 8,
 			want:   false,
 		},
-
 		{
 			desc:   "9 Nao Primo",
 			number: 9,
 			want:   false,
 		},
-
 		{
 			desc:   "10 Nao Primo",
 			number: 10,
 			want:   false,
 		},
-
 		{
 			desc:   "11 Primo",
 			number: 11,
 			want:   true,
 		},
 	}
-
 	for _, tC := range testCases {
 		t.Run(tC.desc, func(t *testing.T) {
 			got, err := calculator.IsPrimo(tC.number)
@@ -285,7 +322,6 @@ func TestIsPrimo(t *testing.T) {
 
 		})
 	}
-
 }
 
 func TestRemainder(t *testing.T) {
@@ -378,7 +414,6 @@ func TestSqrt(t *testing.T) {
 			if tC.want != got {
 				t.Errorf("Unexpected %s: want %f got %f", tC.desc, tC.want, got)
 			}
-
 		})
 	}
 }

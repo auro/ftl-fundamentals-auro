@@ -1,9 +1,12 @@
 package main
 
-import "fmt"
+import (
+	"calculator"
+	"fmt"
+)
 
 func main() {
-	SingleParam(1, 3, "a")
+	fmt.Println(calculator.Subtract(5, 3))
 }
 
 // SingleParam export single param

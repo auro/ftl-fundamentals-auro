@@ -7,40 +7,52 @@ import (
 )
 
 // Add takes two numbers and returns the result of adding them together.
-func Add(nums ...float64) float64 {
-	var total = float64(0)
-	for _, num := range nums {
+func Add(a, b float64, c ...float64) float64 {
+	total := a + b
+	for _, num := range c {
 		total += num
 	}
 	return total
 }
 
 // Subtract takes two numbers and returns the result of subtracting the second from the first.
-func Subtract(a, b float64) float64 {
-	return a - b
+func Subtract(a, b float64, c ...float64) float64 {
+	total := a - b
+	for _, num := range c {
+		total -= num
+	}
+	return total
 }
 
 // Multiply returns first times second
-func Multiply(a, b float64) float64 {
-	return a * b
+func Multiply(a, b float64, c ...float64) float64 {
+	total := a * b
+	for _, num := range c {
+		total *= num
+	}
+	return total
 }
 
 // Divide returns division result from a to b
-func Divide(a, b float64) (float64, error) {
+func Divide(a, b float64, c ...float64) (float64, error) {
 	if b == 0 {
-		return 0, errors.New("Division by zero")
+		return 0, errors.New("division by zero")
 	}
-	return a / b, nil
+	total := a / b
+	for _, num := range c {
+		total /= num
+	}
+	return total, nil
 }
 
 // IsPrimo return boolean result for prime numbers
 func IsPrimo(number int) (bool, error) {
-	var isprime bool = true
+	isprime := true
 	for numLoop := 2; numLoop < number; numLoop++ {
 		got, err := Divide(float64(number), float64(numLoop))
 		receivedErr := err != nil
 		if receivedErr == true {
-			return false, errors.New("Unexpected error")
+			return false, errors.New("division error")
 		}
 		if got == math.Trunc(got) {
 			isprime = false
@@ -57,9 +69,9 @@ func Remainder(a, b int64) int64 {
 
 //Sqrt returns square root of number
 func Sqrt(number float64) (float64, error) {
-	got := math.Sqrt(float64(number))
-	if math.IsNaN(got) {
-		return 0, errors.New("Invalid operation")
+	if number < 0 {
+		return 0, errors.New("cannot accept negative numbers on square root")
 	}
-	return got, nil
+	sqrtresult := math.Sqrt(float64(number))
+	return sqrtresult, nil
 }
