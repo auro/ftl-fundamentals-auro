@@ -51,40 +51,52 @@ func Divide(a, b float64, c ...float64) (float64, error) {
 func Calculate(str string) (float64, error) {
 	i := strings.Index(str, "+")
 	if i > 0 {
-		firstFloat, err := strconv.ParseFloat(strings.TrimSpace(str[:i]), 64)
-		secondFloat, err := strconv.ParseFloat(strings.TrimSpace(str[i+1:]), 64)
-		if err != nil {
-			return 0, err
+		firstFloat, err1 := strconv.ParseFloat(strings.TrimSpace(str[:i]), 64)
+		secondFloat, err2 := strconv.ParseFloat(strings.TrimSpace(str[i+1:]), 64)
+		if err1 != nil {
+			return 0, err1
+		}
+		if err2 != nil {
+			return 0, err2
 		}
 		return Add(firstFloat, secondFloat), nil
 	}
 
 	i = strings.Index(str, "-")
 	if i > 0 {
-		firstFloat, err := strconv.ParseFloat(strings.TrimSpace(str[:i]), 64)
-		secondFloat, err := strconv.ParseFloat(strings.TrimSpace(str[i+1:]), 64)
-		if err != nil {
-			return 0, err
+		firstFloat, err1 := strconv.ParseFloat(strings.TrimSpace(str[:i]), 64)
+		secondFloat, err2 := strconv.ParseFloat(strings.TrimSpace(str[i+1:]), 64)
+		if err1 != nil {
+			return 0, err1
+		}
+		if err2 != nil {
+			return 0, err2
 		}
 		return Subtract(firstFloat, secondFloat), nil
 	}
 
 	i = strings.Index(str, "*")
 	if i > 0 {
-		firstFloat, err := strconv.ParseFloat(strings.TrimSpace(str[:i]), 64)
-		secondFloat, err := strconv.ParseFloat(strings.TrimSpace(str[i+1:]), 64)
-		if err != nil {
-			return 0, err
+		firstFloat, err1 := strconv.ParseFloat(strings.TrimSpace(str[:i]), 64)
+		secondFloat, err2 := strconv.ParseFloat(strings.TrimSpace(str[i+1:]), 64)
+		if err1 != nil {
+			return 0, err1
+		}
+		if err2 != nil {
+			return 0, err2
 		}
 		return Multiply(firstFloat, secondFloat), nil
 	}
 
 	i = strings.Index(str, "/")
 	if i > 0 {
-		firstFloat, err := strconv.ParseFloat(strings.TrimSpace(str[:i]), 64)
-		secondFloat, err := strconv.ParseFloat(strings.TrimSpace(str[i+1:]), 64)
-		if err != nil {
-			return 0, err
+		firstFloat, err1 := strconv.ParseFloat(strings.TrimSpace(str[:i]), 64)
+		secondFloat, err2 := strconv.ParseFloat(strings.TrimSpace(str[i+1:]), 64)
+		if err1 != nil {
+			return 0, err1
+		}
+		if err2 != nil {
+			return 0, err2
 		}
 		return Divide(firstFloat, secondFloat)
 	}
