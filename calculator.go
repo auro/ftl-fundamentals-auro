@@ -106,6 +106,18 @@ func Calculate(str string) (float64, error) {
 // IsPrimo return boolean result for prime numbers
 func IsPrimo(number int) (bool, error) {
 	isprime := true
+	if number < 0 {
+		return false, errors.New("cannot extract sqrt from negative integers")
+	}
+	if number == 0 {
+		return false, errors.New("cannot extract sqrt from zero")
+	}
+	if number == 1 {
+		return false, nil
+	}
+	if number == 2 {
+		return true, nil
+	}
 	for numLoop := 2; numLoop < number; numLoop++ {
 		got, err := Divide(float64(number), float64(numLoop))
 		receivedErr := err != nil
