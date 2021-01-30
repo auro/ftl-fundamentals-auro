@@ -241,8 +241,8 @@ func TestAddRandom(t *testing.T) {
 	t.Parallel()
 	randomTests := 100
 	for testLoop := 0; testLoop < randomTests; testLoop++ {
-		var a float64 = rand.Float64()
-		var b float64 = rand.Float64()
+		a := rand.Float64()
+		b := rand.Float64()
 		want := a + b
 		got := calculator.Add(a, b)
 		if want != got {
