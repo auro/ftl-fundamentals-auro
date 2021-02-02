@@ -35,15 +35,15 @@ func TestAdd(t *testing.T) {
 			desc: "1+2+3=6",
 			a:    1,
 			b:    2,
-			c:    []float64{2},
-			want: 122,
+			c:    []float64{3},
+			want: 6,
 		},
 	}
 	for _, tC := range testCases {
 		t.Run(tC.desc, func(t *testing.T) {
 			got := calculator.Add(tC.a, tC.b, tC.c...)
 			if tC.want != got {
-				t.Errorf("Error on %s: want %f, got %f", tC.desc, tC.want, got)
+				t.Errorf("error on %s: want %f, got %f", tC.desc, tC.want, got)
 			}
 		})
 	}
@@ -82,14 +82,14 @@ func TestSubstract(t *testing.T) {
 			a:    -5,
 			b:    5,
 			c:    []float64{2},
-			want: -8,
+			want: -12,
 		},
 		{
 			desc: "Test Substract V",
 			a:    -5,
 			b:    5,
 			c:    []float64{2, 1},
-			want: -7,
+			want: -13,
 		},
 	}
 	for _, tC := range testCases {
@@ -314,10 +314,10 @@ func TestIsPrimo(t *testing.T) {
 			got, err := calculator.IsPrimo(tC.number)
 			receivedErr := err != nil
 			if receivedErr != tC.errExpected {
-				t.Fatalf("Unexpected error: %s", err)
+				t.Fatalf("unexpected error: %s", err)
 			}
 			if tC.want != got {
-				t.Errorf("Unexpected result for number %d", tC.number)
+				t.Errorf("unexpected result for number %d", tC.number)
 			}
 
 		})
@@ -359,7 +359,7 @@ func TestRemainder(t *testing.T) {
 		t.Run(tC.desc, func(t *testing.T) {
 			got := calculator.Remainder(tC.a, tC.b)
 			if tC.want != got {
-				t.Errorf("Unexpected %s: want %d got %d", tC.desc, tC.want, got)
+				t.Errorf("unexpected %s: want %d got %d", tC.desc, tC.want, got)
 			}
 		})
 	}
@@ -375,6 +375,11 @@ func TestSqrt(t *testing.T) {
 			desc:   "Raiz de 1",
 			number: 1,
 			want:   1,
+		},
+		{
+			desc:   "Raiz de 2",
+			number: 2,
+			want:   1.414214,
 		},
 		{
 			desc:   "Raiz de 4",
@@ -409,10 +414,10 @@ func TestSqrt(t *testing.T) {
 			got, err := calculator.Sqrt(tC.number)
 			receivedErr := err != nil
 			if receivedErr != tC.errExpected {
-				t.Fatalf("Error received from sqrt: %s", err)
+				t.Fatalf("error received from sqrt: %s", err)
 			}
 			if tC.want != got {
-				t.Errorf("Unexpected %s: want %f got %f", tC.desc, tC.want, got)
+				t.Errorf("unexpected %s: want %f got %f", tC.desc, tC.want, got)
 			}
 		})
 	}
@@ -483,10 +488,10 @@ func TestCalculate(t *testing.T) {
 			got, err := calculator.Calculate(tC.str)
 			receivedErr := err != nil
 			if receivedErr != tC.errExpected {
-				t.Fatalf("Error received from operation: %s", err)
+				t.Fatalf("error received from operation: %s", err)
 			}
 			if tC.want != got {
-				t.Errorf("Unexpected error in %s: want %f got %f", tC.desc, tC.want, got)
+				t.Errorf("unexpected error in %s: want %f got %f", tC.desc, tC.want, got)
 			}
 
 		})

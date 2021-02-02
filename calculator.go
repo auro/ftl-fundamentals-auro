@@ -142,6 +142,6 @@ func Sqrt(number float64) (float64, error) {
 	if number < 0 {
 		return 0, errors.New("cannot accept negative numbers on square root")
 	}
-	sqrtresult := math.Sqrt(float64(number))
+	sqrtresult := math.Sqrt(number)
 	return sqrtresult, nil
 }
